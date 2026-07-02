@@ -1,1 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Visual de Redes para Automação</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #18bc9c;
+            --dark: #34495e;
+            --light: #ecf0f1;
+            --text: #2c3e50;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: var(--text);
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        p.subtitle {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.8;
+        }
+
+        /* Sistema de Abas */
+        .tabs-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            background: var(--light);
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+            color: var(--dark);
+        }
+
+        .tab-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Aba 1: Cards de Cabos */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-top: 5px solid var(--secondary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .cable-explanation {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #ddd;
+            color: #555;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Aba 2: Topologias */
+        .topology-menu {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .topo-btn {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .topo-btn:hover, .topo-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .topology-display {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .topology-display.active {
+            display: block;
+        }
+
+        .lists-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .pros-cons-box {
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .pros { background-color: #e8f8f5; border-left: 4px solid #2ecc71; }
+        .cons { background-color: #fdf2f2; border-left: 4px solid #e74c3c; }
+
+        .pros h4 { color: #27ae60; margin-top: 0; }
+        .cons h4 { color: #c0392b; margin-top: 0; }
+
+        ul { padding-left: 1.2rem; margin-bottom: 0; }
+        li { margin-bottom: 0.5rem; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .lists-container { grid-template-columns: 1fr; }
+            .tab-buttons { flex-direction: column; }
+            .tab-btn { border-radius: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Guia Visual de Redes para Automação</h1>
+        <p class="subtitle">Conectividade e Estrutura no Chão de Fábrica</p>
+    </header>
+
+    <div class="tabs-container">
+        <!-- Abas Principais -->
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab('cabos')">Cabos Industriais</button>
+            <button class="tab-btn" onclick="switchTab('topologias')">Topologias</button>
+        </div>
+
+        <!-- CONTEÚDO: CABOS INDUSTRIAIS -->
+        <div id="cabos" class="tab-content active">
+            <p style="color: #666; margin-bottom: 1.5rem;"><em>Clique em um dos cards abaixo para ver a aplicação prática na fábrica:</em></p>
+            <div class="cards-grid">
+                
+                <!-- Card 1 -->
+                <div class="card" onclick="toggleCable('par-trancado')">
+                    <h3>Par Trançado (Blindado)</h3>
+                    <p>O cabo de rede mais comum do mercado, adaptado para a indústria.</p>
+                    <div id="par-trancado" class="cable-explanation">
+                        <strong>Onde é usado:</strong> É o cabo padrão para redes Ethernet Industriais (como PROFINET e Modbus TCP). Muito utilizado para conectar CLPs, painéis de operação (IHMs) e sistemas de supervisão (SCADA) que ficam nos armários elétricos fora do alcance direto de grandes ruídos de motores.
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card" onclick="toggleCable('fibra-optica')">
+                    <h3>Fibra Óptica</h3>
+                    <p>Imunidade total contra interferências eletromagnéticas usando luz.</p>
+                    <div id="fibra-optica" class="cable-explanation">
+                        <strong>Onde é usado:</strong> Ideal para interligar salas de controle que ficam muito distantes dos galpões de produção ou para passar ao lado de cabos de alta tensão e motores gigantescos, já que a luz não sofre com interferência elétrica.
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card" onclick="toggleCable('wireless')">
+                    <h3>Wireless (Sem Fio)</h3>
+                    <p>Mobilidade e flexibilidade usando Wi-Fi Industrial ou Bluetooth.</p>
+                    <div id="wireless" class="cable-explanation">
+                        <strong>Onde é usado:</strong> Utilizado em pontes rolantes, braços robóticos articulados (onde um cabo quebrando seria um problema recorrente) e para coletar dados de sensores de temperatura ou vibração espalhados em locais de difícil acesso na fábrica.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CONTEÚDO: TOPOLOGIAS -->
+        <div id="topologias" class="tab-content">
+            <div class="topology-menu">
+                <button class="topo-btn" id="btn-estrela" onclick="showTopology('estrela')">Layout em Estrela</button>
+                <button class="topo-btn" id="btn-barramento" onclick="showTopology('barramento')">Layout em Barramento</button>
+            </div>
+
+            <!-- Display Estrela -->
+            <div id="topo-estrela" class="topology-display">
+                <h2>Layout em Estrela</h2>
+                <p><strong>Explicação:</strong> Todos os equipamentos da fábrica (CLPs, IHMs, Robôs) são conectados individualmente a um dispositivo central, geralmente um Switch Industrial. Se um cabo quebrar, apenas aquela máquina isolada perde a comunicação.</p>
+                
+                <div class="lists-container">
+                    <div class="pros-cons-box pros">
+                        <h4>Vantagens no Chão de Fábrica</h4>
+                        <ul>
+                            <li>Se um cabo falhar, a fábrica não para (isolamento de falhas).</li>
+                            <li>Muito fácil de achar onde está o problema.</li>
+                            <li>Fácil de adicionar novas máquinas à rede.</li>
+                        </ul>
+                    </div>
+                    <div class="pros-cons-box cons">
+                        <h4>Desvantagens no Chão de Fábrica</h4>
+                        <ul>
+                            <li>Gasta muito mais metros de cabo.</li>
+                            <li>Se o Switch central quebrar, toda a rede cai de uma vez.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Display Barramento -->
+            <div id="topo-barramento" class="topology-display">
+                <h2>Layout em Barramento</h2>
+                <p><strong>Explicação:</strong> Existe apenas um cabo principal (a "espinha dorsal") que percorre a fábrica inteira, e cada máquina se conecta diretamente ao longo desse mesmo cabo. Muito comum em redes clássicas como Profibus DP e Modbus RTU.</p>
+                
+                <div class="lists-container">
+                    <div class="pros-cons-box pros">
+                        <h4>Vantagens no Chão de Fábrica</h4>
+                        <ul>
+                            <li>Economiza muito cabo, reduzindo o custo de instalação.</li>
+                            <li>Estrutura simples para máquinas que ficam enfileiradas na esteira.</li>
+                        </ul>
+                    </div>
+                    <div class="pros-cons-box cons">
+                        <h4>Desvantagens no Chão de Fábrica</h4>
+                        <ul>
+                            <li>Se o cabo principal romper em qualquer ponto, metade da fábrica perde a comunicação.</li>
+                            <li>Difícil descobrir exatamente em qual ponto o cabo quebrou.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Lógica de alternar entre as duas Abas Principais
+        function switchTab(tabId) {
+            // Remove active de todos os botões e conteúdos
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Ativa a aba clicada
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Lógica da Aba 1: Abrir/Fechar explicações dos cards
+        function toggleCable(cableId) {
+            const exp = document.getElementById(cableId);
+            const isVisible = exp.style.display === 'block';
+            
+            // Opcional: esconde os outros antes de abrir o atual
+            document.querySelectorAll('.cable-explanation').forEach(el => el.style.display = 'none');
+            
+            exp.style.display = isVisible ? 'none' : 'block';
+        }
+
+        // Lógica da Aba 2: Mostrar a topologia selecionada
+        function showTopology(topoType) {
+            // Remove active dos botões de topologia e dos displays
+            document.querySelectorAll('.topo-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.topology-display').forEach(disp => disp.classList.remove('active'));
+            
+            // Ativa o selecionado
+            document.getElementById('btn-' + topoType).classList.add('active');
+            document.getElementById('topo-' + topoType).classList.add('active');
+        }
+    </script>
+</body>
+</html>
